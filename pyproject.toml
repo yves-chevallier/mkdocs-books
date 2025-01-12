@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "mkdocs-books"
+version = "0.2.0"
+description = "Convert MkDocs documentation into a LaTeX book"
+authors = ["Yves Chevallier <yves.chevallier@heig-vd.ch>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "mkdocs_plugin_books" }]
+keywords = ["mkdocs", "python", "books", "latex"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.10",
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mkdocs = "^1.6.1"
+
+[tool.poetry.group.dev.dependencies]
+watchdog = "^4.0.1"
+poetry = "^1.8.3"
+toml = "^0.10.2"
+ruff = "^0.9.1"
+black = "^24.10.0"
+
+[tool.poetry.plugins."mkdocs.plugins"]
+"exercises" = "mkdocs_plugin_books.plugin:Books"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

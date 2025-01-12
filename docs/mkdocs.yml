@@ -1,0 +1,77 @@
+site_name: MkDocs Books Plugin
+plugins:
+  - books
+  - search
+repo_url: https://github.com/yves-chevallier/mkdocs-books
+theme:
+  name: material
+  locale: en
+  features:
+    - search.highlight
+    - search.share
+    - search.suggest
+    - header.autohide
+    - navigation.instant
+  icon:
+    admonition:
+      exercise: octicons/mortar-board-16
+      solution: octicons/trophy-16
+      hint: octicons/light-bulb-16
+      foobar: octicons/check-circle-16
+      failure: octicons/x-circle-16
+      reload: octicons/sync-16
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - def_list
+  - abbr
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.inlinehilite
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.snippets
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.smartsymbols
+  - pymdownx.blocks.admonition
+  - pymdownx.blocks.html
+  - pymdownx.magiclink
+extra:
+  latex:
+    enabled: true
+    build_dir: build
+    mermaid_config: mermaid-config.json
+    clean_assets: false
+    books:
+      - root: Cours C
+        cover:
+          name: circles
+          color: indigo(dye)
+          logo: c-logo.pdf
+        title: Book Example
+        subtitle: A book example with a cover
+        folder: book
+        save_html: true
+        email: yves.chevallier@heig-vd.ch
+        index_is_foreword: true
+        drop_title_index: true
+        frontmatter:
+          - Préface
+        backmatter:
+          - colophon
+        copy_files:
+          docs/assets/c-logo.pdf: assets/
+          tex/*.sty: .
+          tex/*.tex: .
