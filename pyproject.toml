@@ -18,11 +18,24 @@ classifiers = [
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.12",
 ]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 mkdocs = "^1.6.1"
+unidecode = "^1.3.8"
+beautifulsoup4 = "^4.12.3"
+requests = "^2.32.3"
+cairosvg = "^2.7.1"
+pillow-avif-plugin = "^1.4.6"
+ruamel-yaml = "^0.18.10"
+mkdocs-material-extensions = "^1.3.1"
+mkdocs-glightbox = "^0.4.0"
+mkdocs-autorefs = "^1.3.0"
+pymdown-extensions = "^10.14"
+mkdocs-material = "^9.5.49"
+pypdf = "^5.1.0"
 
 [tool.poetry.group.dev.dependencies]
 watchdog = "^4.0.1"
@@ -30,9 +43,10 @@ poetry = "^1.8.3"
 toml = "^0.10.2"
 ruff = "^0.9.1"
 black = "^24.10.0"
+ipdb = "^0.13.13"
 
 [tool.poetry.plugins."mkdocs.plugins"]
-"exercises" = "mkdocs_plugin_books.plugin:Books"
+"books" = "mkdocs_plugin_books.plugin:Books"
 
 [build-system]
 requires = ["poetry-core"]

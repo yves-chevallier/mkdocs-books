@@ -36,6 +36,19 @@ def get_filename_from_content(content: Union[str, bytes], output_path: Path) -> 
     return output_path / digest
 
 
+def up_to_date(source: Path, destination: Path) -> bool:
+    """Check if a file is up to date.
+    Does not work well with GitHub Actions cache.
+    """
+    return (
+        destination.exists() and destination.stat().st_mtime >= source.stat().st_mtime
+    )
+
+
+def points_to_mm(points):
+    return points * 25.4 / 72
+
+
 def fetch_image(url: str, output_path: Path) -> Path:
     """Fetch an image from an URL and store it in the output path.
     If the image already exists, it will not be fetched again.
@@ -174,15 +187,6 @@ def mermaid2pdf(
     return pdf_filename
 
 
-def up_to_date(source: Path, destination: Path) -> bool:
-    """Check if a file is up to date.
-    Does not work well with GitHub Actions cache.
-    """
-    return (
-        destination.exists() and destination.stat().st_mtime >= source.stat().st_mtime
-    )
-
-
 def pdf2pdf15(filename: Path, output_path: Path) -> Path:
     """Convert a PDF to PDF 1.5 format."""
     command = [
@@ -263,20 +267,6 @@ def drawio2pdf(filename: Path, output_path: Path) -> Path:
             pdfpath = pdf2pdf15(intermediate, pdfpath)
             intermediate.unlink()
             log.debug("Command succeeded")
-
-    return pdfpath
-
-
-def image2pdf(filename, output_path=Path()):
-    """Convert an existing image to PDF."""
-    if not filename.exists():
-        raise ValueError(f"File does not exist: {filename}")
-
-    pdfpath = get_filename_from_content(filename.name, output_path).with_suffix(".pdf")
-
-    if not pdfpath.exists():
-        image = Image.open(filename)
-        image.save(pdfpath, "PDF")
 
     return pdfpath
 
@@ -389,8 +379,6 @@ def svg2pdf_inkscape(svg, output_path=Path()):
 svg2pdf = svg2pdf_cairo
 
 
-def points_to_mm(points):
-    return points * 25.4 / 72
 
 
 def get_pdf_page_sizes(pdf_path):
@@ -403,23 +391,3 @@ def get_pdf_page_sizes(pdf_path):
         height_mm = points_to_mm(height_pts)
         return (width_mm, height_mm)
     return None
-
-
-def to_kebab_case(name):
-    """Converts a string to kebab case
-    >>> to_kebab_case("Hello World")
-    'hello-world'
-    >>> to_kebab_case("Hello World!")
-    'hello-world'
-    >>> to_kebab_case("L'abricot")
-    'l-abricot'
-    >>> to_kebab_case("Éléphant")
-    'elephant'
-    """
-    name = unidecode.unidecode(name)
-    name = re.sub(r"[^\w\s']", "", name)
-    name = re.sub(r"[\s']+", "-", name)
-    return name.lower()
-    name = re.sub(r"[\s']+", "-", name)
-    return name.lower()
-    return name.lower()

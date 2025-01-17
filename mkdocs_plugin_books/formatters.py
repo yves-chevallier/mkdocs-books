@@ -4,30 +4,9 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
+from .helpers import optimize_list, escape_latex_chars
+
 TEMPLATE_DIR = Path(__file__).parent / 'templates'
-
-
-def optimize_list(numbers):
-    """Optimize a list of numbers to a list of ranges.
-    >>> optimize_list([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 15, 16])
-    ['1-6', '8-10', '12', '14-16']
-    """
-    if not numbers:
-        return []
-
-    numbers = sorted(numbers)
-    optimized = []
-    start = end = numbers[0]
-
-    for num in numbers[1:]:
-        if num == end + 1:
-            end = num
-        else:
-            optimized.append(f"{start}-{end}" if start != end else str(start))
-            start = end = num
-
-    optimized.append(f"{start}-{end}" if start != end else str(start))
-    return optimized
 
 
 class LaTeXFormatter:

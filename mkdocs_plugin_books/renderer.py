@@ -8,7 +8,7 @@ from urllib.parse import quote, urlparse, urlunparse
 
 import yaml
 from bs4 import BeautifulSoup, NavigableString, PageElement, Tag
-
+from .helpers import escape_latex_chars
 from .formatters import LaTeXFormatter
 from .transformers import (
     drawio2pdf,
@@ -78,20 +78,6 @@ def find_all_dfs(soup: Tag, *args, **kwargs):
     return [item for _, item in sorted(items, key=lambda x: x[0], reverse=True)]
 
 
-def escape_latex_chars(text):
-    mapping = [
-        ("&", r"\&"),
-        ("%", r"\%"),
-        ("#", r"\#"),
-        ("$", r"\$"),
-        ("_", r"\_"),
-        ("^", r"\^"),
-        ("{", r"\{"),
-        ("}", r"\}"),
-        ("~", r"\textasciitilde{}"),
-        ("\\", r"\textbackslash{}"),
-    ]
-    return "".join([c if c not in dict(mapping) else dict(mapping)[c] for c in text])
 
 
 class LaTeXRenderer:

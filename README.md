@@ -94,3 +94,11 @@ then the entire soup will be replaced with a LaTeXString.
   - :smile: (smile)
   - :smiley: (smiley)
 -
+
+## LaTeX Build
+
+Once the LaTeX is generated, you need a LaTeX distribution to build the PDF. We prefer using `latexmk` which is a Perl script that automates the process of generating a LaTeX document. We uses the engine `luatex` which is a modern TeX engine with Unicode support and therefore truetype fonts allowing for better font rendering and customisation.
+
+On Linux, installing the `texlive-full` package will provide all the necessary tools, however it is a quite large package (over 4GB). Moreover depending on your distribution, you may not have the same TeXLive version. To solve this dependency issue as well as installing the latest full version of TeXLive (especially for a CI), we provides a Dockerfile which rebuilds from scratch a TeXLive distribution with all the necessary tools for this plugin.
+
+```bash
