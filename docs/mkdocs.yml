@@ -54,24 +54,24 @@ extra:
     build_dir: build
     mermaid_config: mermaid-config.json
     clean_assets: false
-    books:
-      - root: Cours C
-        cover:
-          name: circles
-          color: indigo(dye)
-          logo: c-logo.pdf
-        title: Book Example
-        subtitle: A book example with a cover
-        folder: book
-        save_html: true
-        email: yves.chevallier@heig-vd.ch
-        index_is_foreword: true
-        drop_title_index: true
-        frontmatter:
-          - Préface
-        backmatter:
-          - colophon
-        copy_files:
-          docs/assets/c-logo.pdf: assets/
-          tex/*.sty: .
-          tex/*.tex: .
+    # books:
+    #   - root: Cours C
+    #     cover:
+    #       name: circles
+    #       color: indigo(dye)
+    #       logo: c-logo.pdf
+    #     title: Book Example
+    #     subtitle: A book example with a cover
+    #     folder: book
+    #     save_html: true
+    #     email: yves.chevallier@heig-vd.ch
+    #     index_is_foreword: true
+    #     drop_title_index: true
+    #     frontmatter:
+    #       - Préface
+    #     backmatter:
+    #       - colophon
+    #     copy_files:
+    #       docs/assets/c-logo.pdf: assets/
+    #       tex/*.sty: .
+    #       tex/*.tex: .

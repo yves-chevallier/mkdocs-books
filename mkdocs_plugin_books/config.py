@@ -15,11 +15,11 @@ class Debug(base.Config):
 
 
 class BookConfig(base.Config):
-    output_dir = c.Dir(default="books")
-    """ Where to generate LaTeX books. """
-
     debug = c.SubConfig(Debug)
     """ Debugging options for developpers. """
+
+    directory = c.Optional(c.Dir())
+    """ Subdirectory to output_dir where to generate the book. """
 
     root = c.Type(str, default="")
     """ Section title to start the book from. """
@@ -68,6 +68,9 @@ class BookConfig(base.Config):
 class BooksConfig(base.Config):
     enabled = c.Type(bool, default=True)
     """ Enable Plugin: LaTeX Generation. """
+
+    output_dir = c.Dir(default="books")
+    """ Where to generate LaTeX books (absolute or relative to project dir). """
 
     books = c.ListOfItems(c.SubConfig(BookConfig), default=[])
     """ List of books to generate. """
