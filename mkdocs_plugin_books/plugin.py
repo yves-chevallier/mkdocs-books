@@ -148,15 +148,14 @@ class Book:
         self.mainmatter = []
         self._sort_by_part(self.section)
 
-        embed()
-
     def _fetch_files(self, item: StructureItem):
         files = []
-        for child in item.children or []:
-            if child.is_page:
-                files.append(child.file)
-            else:
+        if item.is_page:
+            files.append(item.file)
+        else:
+            for child in item.children or []:
                 files.extend(self._fetch_files(child))
+
         return files
 
     def _propagate_meta(self, item: StructureItem, level=0, numbered=True):
@@ -217,12 +216,12 @@ class Book:
         # Remove unused objets (list build/assets directors and remove those that are not in assets_map keys)
         assets_map = renderer.get_assets_map()
         if self.config.debug.clean_assets:
-            for file in (self.config.folder / "assets/").iterdir():
+            for file in (self.config.directory / "assets/").iterdir():
                 if file not in assets_map and file.is_file():
-                    log.info(f"Removing unused asset {file}")
+                    log.info("Removing unused asset %s", file)
                     file.unlink()
 
-        (build_dir / "assets_map.yml").write_text(
+        (self.config.directory / "assets_map.yml").write_text(
             yaml.dump(assets_map, default_flow_style=False, allow_unicode=True)
         )
 
@@ -237,17 +236,17 @@ class Book:
             frontmatter=self._get_latex(self.frontmatter, renderer),
             mainmatter=self._get_latex(self.mainmatter, renderer),
         )
-        (self.config.folder / "index.tex").write_text(index)
+        (self.config.directory / "main.tex").write_text(index)
 
-        (self.config.folder / "acronyms.tex").write_text(renderer.get_list_acronyms())
-        (self.config.folder / "glossary.tex").write_text(renderer.get_list_glossary())
-        (self.config.folder / "solutions.tex").write_text(renderer.get_list_solutions())
-        (self.config.folder / "cover.tex").write_text(self.render_cover(renderer))
+        (self.config.directory / "acronyms.tex").write_text(renderer.get_list_acronyms())
+        (self.config.directory / "glossary.tex").write_text(renderer.get_list_glossary())
+        (self.config.directory / "solutions.tex").write_text(renderer.get_list_solutions())
+        (self.config.directory / "cover.tex").write_text(self.render_cover(renderer))
 
         # Copy class file
         shutil.copy2(
-            Path(__file__).parent / "latex/templates/mkbook.cls",
-            build_dir / "mkbook.cls",
+            Path(__file__).parent / "templates/mkbook.cls",
+            self.config.directory / "mkbook.cls",
         )
 
         self._copy_assets()
@@ -259,7 +258,7 @@ class Book:
 
         html = file.page.content
 
-        if self.config.save_html:
+        if self.config.debug.save_html:
             path.with_suffix(".html").write_text(html)
 
         latex = renderer.render(

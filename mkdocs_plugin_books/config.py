@@ -4,18 +4,21 @@ from mkdocs.config.base import Config
 
 
 class CoverConfig(base.Config):
-    name = c.Type(str, default="default")  # Cover template name
+    name = c.Type(str, default="circles")  # Cover template name
     color = c.Type(str, default="black")  # Primary color
     logo = c.Type(str)  # Logo path
 
 
-class Debug(base.Config):
+class DebugConfig(base.Config):
     save_html = c.Type(bool, default=False)
     """ Save intermediate HTML files for debugging. """
 
+    clean_assets = c.Type(bool, default=True)
+    """ Clean assets folder before generation (regenerate images). """
+
 
 class BookConfig(base.Config):
-    debug = c.SubConfig(Debug)
+    debug = DebugConfig()
     """ Debugging options for developpers. """
 
     directory = c.Optional(c.Dir())
@@ -24,7 +27,7 @@ class BookConfig(base.Config):
     root = c.Type(str, default="")
     """ Section title to start the book from. """
 
-    cover = c.SubConfig(CoverConfig)
+    cover = CoverConfig()
     """ Book cover configuration. """
 
     base_level = c.Type(int, default=-2)
@@ -75,8 +78,6 @@ class BooksConfig(base.Config):
     books = c.ListOfItems(c.SubConfig(BookConfig), default=[])
     """ List of books to generate. """
 
-    clean_assets = c.Type(bool, default=True)
-    """ Clean assets folder before generation (regenerate images). """
 
     # @classmethod
     # def propagate(cls, data: Any) -> Any:
