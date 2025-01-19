@@ -18,11 +18,11 @@
 
 \input{cover}
 
-\cleardoublepage
-\input{titlepage}
+% \cleardoublepage
+% \input{titlepage}
 
-\thispagestyle{empty}
-\input{imprint}
+% \thispagestyle{empty}
+% \input{imprint}
 
 % Avoid discusting pages
 \raggedbottom

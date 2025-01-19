@@ -31,6 +31,7 @@ cairosvg = "^2.7.1"
 pillow-avif-plugin = "^1.4.6"
 ruamel-yaml = "^0.18.10"
 pypdf = "^5.1.0"
+click = "^8.1.8"
 
 [tool.poetry.group.dev.dependencies]
 pymdown-extensions = "^10.14"
@@ -44,6 +45,9 @@ toml = "^0.10.2"
 ruff = "^0.9.1"
 black = "^24.10.0"
 ipdb = "^0.13.13"
+
+[tool.poetry.scripts]
+mkdocs-books = "mkdocs_plugin_books.cli:__main__"
 
 [tool.poetry.plugins."mkdocs.plugins"]
 "books" = "mkdocs_plugin_books.plugin:Books"
